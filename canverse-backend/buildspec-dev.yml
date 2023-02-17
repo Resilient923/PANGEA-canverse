@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - ECR=900631173155.dkr.ecr.ap-northeast-2.amazonaws.com
+      - REPO=$ECR/canverse-backend-dev
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR
+      - docker pull $REPO:latest || true
+  build:
+    commands:
+      - docker build . --cache-from $REPO:latest -t $REPO:latest
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - docker push $REPO:latest
+      - printf '[{"name":"canverse-backend-dev","imageUri":"%s"}]' $REPO:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
