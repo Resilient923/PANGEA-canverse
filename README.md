@@ -1,5 +1,5 @@
 # CANVERSE project
-CANVERSE service project code with NestJs
+Blockchain service project code with NestJs
 
 - CANVERSE 서비스가 종료됨에 따라 개인작업물을 정리해서 올려놓은 레포지토리입니다.
 - https://www.canverse.org
